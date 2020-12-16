@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>爱尚电影</title>
+    <style>
+        /*解决页面浮动后的塌陷问题*/
+        .clearfix {
+            zoom: 1;
+        }
+
+        .clearfix:after {
+            content: "";
+            display: block;
+            visibility: hidden;
+            line-height: 0;
+            clear: both;
+        }
+
+        body, div {
+            margin: 0 auto;
+        }
+
+
+        div {
+            border: 0px solid skyblue;
+            width: 1339px;
+            text-align: center;
+        }
+
+
+        ul {
+            list-style-type: none;
+            display: inline-block;
+
+        }
+
+
+        #header li {
+            float: left;
+            margin-left: 10px;
+            font-size: 16px;
+            font-family: '微软雅黑';
+            color: #666666;
+
+
+        }
+
+        #header li:hover {
+            cursor: pointer;
+            background: blue;
+            color: white;
+        }
+
+
+        #content li {
+            float: left;
+            display: inline;
+            margin-right: 49px;
+            text-align: center;
+            height: 288px;
+        {#overflow: hidden;#} padding-top: 23px;
+
+        }
+
+        #content h1 {
+            margin-left: 28px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 14px;
+            margin-block: 12px;
+        }
+
+
+        .tip {
+        {#display: block;#} font-size: 12px;
+        }
+
+        .h1, .tip {
+            width: 110px;
+            text-align: center;
+        }
+
+        #content ul {
+            /*去除ul的内边距和外边距*/
+            margin: 0px;
+            margin-left: 0px;
+            padding: 0px;
+            margin-left: 56px;
+        }
+
+        #div1 {
+            width: 200px;
+            height: 138px;
+            border: #000 solid 0px;
+            margin: 50px auto;
+            /* overflow: hidden; */
+        }
+
+        #div1 img {
+            cursor: pointer;
+            transition: all 0.6s;
+        }
+
+        #div1 img:hover {
+            transform: scale(1.4);
+        }
+
+        .qq {
+            margin-block: 57px;
+        }
+
+
+    </style>
+</head>
+<body>
+{#<div id="header" class="clearfix">#}
+{#    <ul class="clearfix">#}
+{#        <li>首页</li>#}
+{#        <li>电影</li>#}
+{#        <li>电视剧</li>#}
+{#        <li>动漫</li>#}
+{#        <li>综艺</li>#}
+{#        <li>音乐</li>#}
+{#        <li>MV</li>#}
+{#        <li>视频</li>#}
+{#        <li>短片</li>#}
+{#        <li>公开课</li>#}
+{#    </ul>#}
+{#</div>#}
+
+<nav class="navbar navbar-expand-lg navbar navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">首页</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="#">电影 <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="https://focusmusic.fm/">音乐</a>
+            </li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" type="search" placeholder="搜索" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">搜索</button>
+        </form>
+    </div>
+</nav>
+<div class="spinner-grow text-primary" role="status">
+    <span class="sr-only">Loading...</span>
+</div>
+<div class="spinner-grow text-secondary" role="status">
+    <span class="sr-only">Loading...</span>
+</div>
+<div class="spinner-grow text-success" role="status">
+    <span class="sr-only">Loading...</span>
+</div>
+<div class="spinner-grow text-danger" role="status">
+    <span class="sr-only">Loading...</span>
+</div>
+
+<div id="content">
+    <ul class="clearfix">
+{#        {% for movie in movies %}#}
+{#        新写法#}
+        {% for movie in p %}
+
+            <li>
+                <div id='div1'>
+                    <a href="{{ movie.a }}"><img src="{{ movie.imgs }} " class='rounded'/></a>
+                    <a href="{{ movie.a }}" class="text-muted"><h1 class="h1">{{ movie.name }}</h1></a>
+                    <span> {{ movie.Strring }}</span>
+                </div>
+            </li>
+
+        {% endfor %}
+    </ul>
+</div>
+<div class="qq">
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+            <li class="page-item disabled">
+                <a class="page-link" href="#" tabindex="-1">Previous</a>
+            </li>
+            {#        原生写法#}
+            {#        <li class="page-item"><a class="page-link" href="/?num={{ shangye }}">上页</a></li>#}
+            {#        <li class="page-item"><a class="page-link" href="/?num={{ xiaye }}">下页</a></li>#}
+            {#        新写法#}
+            {% if p.has_previous %}
+                <li class="page-item"><a class="page-link" href="/index/?num={{ p.previous_page_number }}">上页</a></li>
+            {% endif %}
+            {% if p.has_next %}
+                 <li class="page-item"><a class="page-link" href="/index/?num={{p.next_page_number }}">下页</a></li>
+            {% endif %}
+
+
+        </ul>
+    </nav>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+</body>
+</html>
